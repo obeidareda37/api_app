@@ -14,7 +14,7 @@ class ApiHelper {
     return categories;
   }
 
-  Future<List<SingleProductModel>> getCategoryProducts(int productNum) async {
+  Future<List<SingleProductModel>> getSingleProducts(int productNum) async {
     String url = 'https://fakestoreapi.com/products/$productNum';
     Response response = await dio.get(url);
     List<dynamic> products = response.data;

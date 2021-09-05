@@ -8,13 +8,14 @@ class HomeScreen extends StatelessWidget {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: Text('Home Screen'),
       ),
       body: Center(
         child: RaisedButton(
           onPressed: () async {
+            print('start');
             List<SingleProductModel> products =
-                await ApiHelper.apiHelper.getAllProducts();
+                await ApiHelper.apiHelper.getSingleProducts(1);
             print(products);
           },
         ),
