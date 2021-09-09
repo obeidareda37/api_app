@@ -1,10 +1,13 @@
+import 'package:api_app/helpers/database_helpers.dart';
 import 'package:api_app/provider/api_provider.dart';
 import 'package:api_app/views/HomeScreen.dart';
 import 'package:api_app/views/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await DatabaseHelper.databaseHelper.initDatabase();
   runApp(MyApp());
 }
 
