@@ -6,7 +6,7 @@ class SingleProductModel {
   String category;
   String image;
   Rating rating;
-  bool isFavorite;
+  int quantity;
 
   SingleProductModel(
       {this.id,
@@ -15,16 +15,17 @@ class SingleProductModel {
       this.description,
       this.category,
       this.image,
-      this.rating,
-      this.isFavorite});
+      this.rating});
 
   SingleProductModel.fromJson(Map<String, dynamic> json) {
+    print(json['quantity']);
     id = json['id'];
     title = json['title'];
     price = json['price'];
     description = json['description'];
     category = json['category'];
     image = json['image'];
+    quantity = json['quantity'];
     rating =
         json['rating'] != null ? new Rating.fromJson(json['rating']) : null;
   }
@@ -43,23 +44,20 @@ class SingleProductModel {
     return data;
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'title': title,
-      'price': price,
-      'image': image,
-    };
+  Map<String, dynamic> todBJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['title'] = this.title;
+    data['price'] = this.price;
+    data['description'] = this.description;
+    data['category'] = this.category;
+    data['image'] = this.image;
+    data['quantity'] = quantity ?? 1;
+
+    return data;
   }
 
-  factory SingleProductModel.fromMap(Map<String, dynamic> map) {
-    return SingleProductModel(
-      id: map['id'],
-      title: map['title'],
-      price: map['price'],
-      image: map['image'],
-    );
-  }
+
 }
 
 class Rating {

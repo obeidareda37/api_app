@@ -1,6 +1,6 @@
 import 'package:api_app/provider/api_provider.dart';
-import 'package:api_app/views/HomeScreen.dart';
-import 'package:api_app/views/home_page.dart';
+import 'package:api_app/service/route_helpers.dart';
+import 'package:api_app/views/home_screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,22 +14,27 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Provider.of<ApiProvider>(context,listen: false).getAllCategories();
-    Provider.of<ApiProvider>(context,listen: false).getAllProducts();
-
+    Provider.of<ApiProvider>(context, listen: false).getAllCategories();
+    Provider.of<ApiProvider>(context, listen: false).getAllProducts();
   }
 
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 2)).then((value) => {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => HomePage()),
-          )
+          RouteHelper.routeHelper.goToPageReplacement(HomeScreen.routeName),
         });
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
-        child: FlutterLogo(),
-      ),
+          child: Container(
+            width: 260,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.contain,
+            image: AssetImage('assets/images/logo.jpg'),
+          ),
+        ),
+      )),
     );
   }
 }

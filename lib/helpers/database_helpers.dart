@@ -25,6 +25,7 @@ class DatabaseHelper {
   static final String cartDescriptionColumnName = 'description';
   static final String cartCategoryColumnName = 'category';
   static final String cartImageColumnName = 'image';
+  static final String cartQuantityColumnName = 'quantity';
 
   Database database;
 
@@ -38,26 +39,28 @@ class DatabaseHelper {
     Database database =
         await openDatabase(path, version: 1, onCreate: (db, version) {
       db.execute('''CREATE TABLE $favoriteTableName 
-          ($favoriteIdColumnName INTEGER PRIMARY KEY AUTOINCREMENT,
-           $favoriteTitleColumnName TEXT, $favoritePriceColumnName REAL, $favoriteImageColumnName TEXT)''');
+          ($favoriteIdColumnName INTEGER PRIMARY KEY ,
+           $favoriteTitleColumnName TEXT, $favoriteDescriptionColumnName TEXT, $favoriteCategoryColumnName TEXT, $favoritePriceColumnName REAL, $favoriteImageColumnName TEXT)''');
       db.execute('''CREATE TABLE $cartTableName 
-          ($cartIdColumnName INTEGER PRIMARY KEY AUTOINCREMENT,
-           $cartTitleColumnName TEXT, $cartPriceColumnName REAL, $cartImageColumnName TEXT)''');
-     }, onOpen: (database) {
+          ($cartIdColumnName INTEGER PRIMARY KEY ,
+           $cartTitleColumnName TEXT, $cartDescriptionColumnName TEXT, $cartCategoryColumnName TEXT, $cartPriceColumnName REAL, $cartImageColumnName TEXT, quantity INTEGER)''');
+    }, onOpen: (database) {
       print('the database has been opened');
     });
     return database;
   }
 
   insertFavorite(SingleProductModel product) async {
-    int rowNum = await database.insert(favoriteTableName, product.toMap());
+    Map map = product.todBJson();
+    map.remove('quantity');
+    int rowNum = await database.insert(favoriteTableName, map);
     print(rowNum);
   }
 
   Future<List<SingleProductModel>> getAllProducts() async {
     List<Map<String, Object>> results = await database.query(favoriteTableName);
     List<SingleProductModel> product = results.map((e) {
-      return SingleProductModel.fromMap(e);
+      return SingleProductModel.fromJson(e);
     }).toList();
     return product;
   }
@@ -66,20 +69,26 @@ class DatabaseHelper {
     database.delete(favoriteTableName, where: 'id=?', whereArgs: [id]);
   }
 
-
-
-
   insertCart(SingleProductModel product) async {
-    int rowNum = await database.insert(cartTableName, product.toMap());
+    int rowNum = await database.insert(cartTableName, product.todBJson());
     print(rowNum);
   }
 
   Future<List<SingleProductModel>> getAllProductsCart() async {
     List<Map<String, Object>> results = await database.query(cartTableName);
     List<SingleProductModel> product = results.map((e) {
-      return SingleProductModel.fromMap(e);
+      return SingleProductModel.fromJson(e);
     }).toList();
     return product;
+  }
+
+  updateProductQuantity(SingleProductModel singleProductModel) async {
+    // productResponse.quantity = productResponse.quantity++;
+
+    singleProductModel.quantity = ++singleProductModel.quantity;
+
+    database.update('Cart', singleProductModel.todBJson(),
+        where: 'id=?', whereArgs: [singleProductModel.id]);
   }
 
   deleteProductCart(int id) async {
