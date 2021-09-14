@@ -37,7 +37,7 @@ class DatabaseHelper {
     Directory directory = await getApplicationDocumentsDirectory();
     String path = directory.path + '/$dbaseName';
     Database database =
-        await openDatabase(path, version: 1, onCreate: (db, version) {
+    await openDatabase(path, version: 1, onCreate: (db, version) {
       db.execute('''CREATE TABLE $favoriteTableName 
           ($favoriteIdColumnName INTEGER PRIMARY KEY ,
            $favoriteTitleColumnName TEXT, $favoriteDescriptionColumnName TEXT, $favoriteCategoryColumnName TEXT, $favoritePriceColumnName REAL, $favoriteImageColumnName TEXT)''');
@@ -87,7 +87,7 @@ class DatabaseHelper {
 
     singleProductModel.quantity = ++singleProductModel.quantity;
 
-    database.update('Cart', singleProductModel.todBJson(),
+    database.update(cartTableName, singleProductModel.todBJson(),
         where: 'id=?', whereArgs: [singleProductModel.id]);
   }
 

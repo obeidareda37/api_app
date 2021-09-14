@@ -111,4 +111,16 @@ class ApiProvider with ChangeNotifier {
     this.favouriteProducts = products;
     notifyListeners();
   }
+
+  double getTotalPrice() {
+    double sum = 0.0;
+    cartProducts == null
+        ? sum = 0.0
+        : cartProducts.forEach((element) {
+            sum += (element.quantity * element.price);
+            print("sum ${sum}");
+          });
+
+    return sum ?? 0.0;
+  }
 }

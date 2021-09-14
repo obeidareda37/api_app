@@ -58,6 +58,8 @@ class SingleProductModel {
   }
 
 
+
+
 }
 
 class Rating {

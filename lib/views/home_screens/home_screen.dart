@@ -180,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2,
-                                      mainAxisExtent: 200,
+                                      mainAxisExtent: 220,
                                       crossAxisSpacing: 10,
                                       mainAxisSpacing: 10),
                               itemCount: provider.categoryProducts.length,
@@ -192,110 +192,123 @@ class _HomeScreenState extends State<HomeScreen> {
                                     RouteHelper.routeHelper
                                         .goToPage(ProductDetails.routeName);
                                   },
-                                  child: Container(
-                                    height: 300,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15),
-                                      color: Colors.white,
+                                  child: Card(
+                                    elevation: 2,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadiusDirectional.only(
+                                              topStart: Radius.circular(15),
+                                              bottomStart: Radius.circular(15),
+                                              bottomEnd: Radius.circular(15)),
                                     ),
-                                    child: Column(
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional.topEnd,
-                                          child: Container(
-                                            alignment: Alignment.center,
-                                            padding: EdgeInsets.all(5),
-                                            width: 70,
-                                            height: 30,
-                                            decoration: BoxDecoration(
-                                              color: Colors.deepOrange,
-                                              borderRadius:
-                                                  BorderRadiusDirectional.only(
-                                                bottomStart:
-                                                    Radius.circular(15),
+                                    child: Container(
+                                      height: 300,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        color: Colors.white,
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional.topEnd,
+                                            child: Container(
+                                              alignment: Alignment.center,
+                                              padding: EdgeInsets.all(5),
+                                              width: 70,
+                                              height: 30,
+                                              decoration: BoxDecoration(
+                                                color: Colors.deepOrange,
+                                                borderRadius:
+                                                    BorderRadiusDirectional
+                                                        .only(
+                                                  bottomStart:
+                                                      Radius.circular(15),
+                                                ),
+                                              ),
+                                              child: Text(
+                                                provider.categoryProducts[index]
+                                                        .price
+                                                        .toString() +
+                                                    '\$',
+                                                style: TextStyle(
+                                                    color: Colors.white),
                                               ),
                                             ),
-                                            child: Text(
-                                              provider.categoryProducts[index]
-                                                      .price
-                                                      .toString() +
-                                                  '\$',
-                                              style: TextStyle(
-                                                  color: Colors.white),
+                                          ),
+                                          Container(
+                                            width: 100,
+                                            height: 100,
+                                            padding: EdgeInsets.only(top: 2),
+                                            child: CachedNetworkImage(
+                                              imageUrl: provider
+                                                  .categoryProducts[index]
+                                                  .image,
                                             ),
                                           ),
-                                        ),
-                                        Container(
-                                          width: 100,
-                                          height: 100,
-                                          padding: EdgeInsets.only(top: 2),
-                                          child: CachedNetworkImage(
-                                            imageUrl: provider
-                                                .categoryProducts[index].image,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .only(start: 10, end: 10),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  provider
-                                                      .categoryProducts[index]
-                                                      .title,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 1,
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                      ' ${provider.categoryProducts[index].rating.rate}',
-                                                      style: TextStyle(
-                                                          color: Colors
-                                                              .deepOrange),
-                                                    ),
-                                                    Spacer(),
-                                                    IconButton(
-                                                        onPressed: () {
-                                                          provider.insertToFavourite(
-                                                              provider.categoryProducts[
-                                                                  index]);
-                                                          print(provider
-                                                                  .categoryProducts[
-                                                              index]);
-                                                        },
-                                                        icon: provider
-                                                                    .favouriteProducts
-                                                                    ?.any((element) =>
-                                                                        element
-                                                                            .id ==
-                                                                        provider
-                                                                            .categoryProducts[index]
-                                                                            .id) ??
-                                                                false
-                                                            ? Icon(
-                                                                Icons.favorite,
-                                                                color: Colors
-                                                                    .deepOrange,
-                                                              )
-                                                            : Icon(
-                                                                Icons
-                                                                    .favorite_border_outlined,
-                                                                color: Colors
-                                                                    .deepOrange,
-                                                              )),
-                                                  ],
-                                                ),
-                                              ],
+                                          Expanded(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .only(start: 10, end: 10),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    provider
+                                                        .categoryProducts[index]
+                                                        .title,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 2,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        ' ${provider.categoryProducts[index].rating.rate}',
+                                                        style: TextStyle(
+                                                            color: Colors
+                                                                .deepOrange),
+                                                      ),
+                                                      Spacer(),
+                                                      IconButton(
+                                                          onPressed: () {
+                                                            provider.insertToFavourite(
+                                                                provider.categoryProducts[
+                                                                    index]);
+                                                            print(provider
+                                                                    .categoryProducts[
+                                                                index]);
+                                                          },
+                                                          icon: provider.favouriteProducts?.any((element) =>
+                                                                      element
+                                                                          .id ==
+                                                                      provider
+                                                                          .categoryProducts[
+                                                                              index]
+                                                                          .id) ??
+                                                                  false
+                                                              ? Icon(
+                                                                  Icons
+                                                                      .favorite,
+                                                                  color: Colors
+                                                                      .deepOrange,
+                                                                )
+                                                              : Icon(
+                                                                  Icons
+                                                                      .favorite_border_outlined,
+                                                                  color: Colors
+                                                                      .deepOrange,
+                                                                )),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 );
