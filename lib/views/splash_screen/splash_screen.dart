@@ -1,6 +1,7 @@
 import 'package:api_app/provider/api_provider.dart';
 import 'package:api_app/service/route_helpers.dart';
 import 'package:api_app/views/home_screens/home_screen.dart';
+import 'package:api_app/views/onboarding_screen/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 2)).then((value) => {
-          RouteHelper.routeHelper.goToPageReplacement(HomeScreen.routeName),
+          RouteHelper.routeHelper.goToPageReplacement(OnBoardingScreen.routName),
         });
     return Scaffold(
       backgroundColor: Colors.white,

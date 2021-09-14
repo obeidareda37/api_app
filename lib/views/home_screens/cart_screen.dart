@@ -1,6 +1,9 @@
 import 'package:api_app/model/single_product_model.dart';
 import 'package:api_app/provider/api_provider.dart';
 import 'package:api_app/service/route_helpers.dart';
+import 'package:api_app/widget/bottoms_navigation/cart_bottom_navigation.dart';
+import 'package:api_app/widget/custom_button/custom_button_widget.dart';
+import 'package:api_app/widget/custom_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,70 +23,14 @@ class _FavoriteScreenState extends State<CartScreen> {
         Provider.of<ApiProvider>(context, listen: false).getTotalPrice();
 
     return Scaffold(
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadiusDirectional.only(
-            topStart: Radius.circular(15),
-            topEnd: Radius.circular(15),
-          ),
-          color: Colors.white,
-        ),
-        height: 130,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  margin: EdgeInsetsDirectional.only(start: 30, top: 25),
-                  child: Text(
-                    'Total',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsetsDirectional.only(end: 30, top: 25),
-                  child: Text(
-                    '\$ $totalPrice',
-                    style: TextStyle(
-                        color: Colors.deepOrange,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              height: 50,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: MaterialButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                color: Colors.orange,
-                onPressed: () {},
-                child: Text(
-                  'Checkout',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                ),
-              ),
-            )
-          ],
-        ),
+      bottomNavigationBar: CartBottomNavigation(
+        totalPrice: totalPrice,
       ),
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: Text(
-          'Cart',
-          style: TextStyle(color: Colors.black),
+        title: CustomText(
+          text: 'Cart',
+          colorText: Colors.black,
         ),
         backgroundColor: Colors.grey[200],
         elevation: 0,
@@ -104,7 +51,9 @@ class _FavoriteScreenState extends State<CartScreen> {
           List<SingleProductModel> products = provider.cartProducts;
           return products == null
               ? Center(
-                  child: Text('No Carts'),
+                  child: CustomText(
+                    text: 'No Carts',
+                  ),
                 )
               : Container(
                   margin: EdgeInsetsDirectional.only(top: 15, start: 5, end: 5),
@@ -175,20 +124,20 @@ class _FavoriteScreenState extends State<CartScreen> {
                                       Row(
                                         children: [
                                           Container(
-                                            child: Text(
-                                              '\$ ${products[index].price.toString()}',
-                                              style: TextStyle(
-                                                  color: Colors.deepOrange),
+                                            child: CustomText(
+                                              text:
+                                                  '\$ ${products[index].price.toString()}',
+                                              colorText: Colors.deepOrange,
                                             ),
                                           ),
                                           SizedBox(
                                             width: 100,
                                           ),
                                           Container(
-                                            child: Text(
-                                              'quantity : ${products[index].quantity}',
-                                              style: TextStyle(
-                                                  color: Colors.deepOrange),
+                                            child: CustomText(
+                                              text:
+                                                  'quantity : ${products[index].quantity}',
+                                              colorText: Colors.deepOrange,
                                             ),
                                           ),
                                         ],

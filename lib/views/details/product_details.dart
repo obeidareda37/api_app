@@ -1,6 +1,9 @@
 import 'package:api_app/provider/api_provider.dart';
 import 'package:api_app/service/route_helpers.dart';
 import 'package:api_app/views/home_screens/cart_screen.dart';
+import 'package:api_app/widget/bottoms_navigation/details_bottom_navigation.dart';
+import 'package:api_app/widget/custom_button/custom_button_widget.dart';
+import 'package:api_app/widget/custom_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,50 +18,13 @@ class ProductDetails extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: Consumer<ApiProvider>(
         builder: (context, provider, x) {
-          return Container(
-            height: 70,
-            child: Row(
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      provider.insertToCart(provider.selectedProduct);
-                    },
-                    child: Container(
-                      margin: EdgeInsets.all(10),
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.symmetric(vertical: 15),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Colors.orange),
-                      width: double.infinity,
-                      child: Text(
-                        'Add To Cart',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w800),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  width: 55,
-                  height: 55,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: Icon(
-                    Icons.favorite_border,
-                    size: 25,
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                )
-              ],
-            ),
+          return DetailsBottomNavigation(
+            onPressedCart: () {
+              provider.insertToCart(provider.selectedProduct);
+            },
+            onPressedFavorite: () {
+              provider.insertToFavourite(provider.selectedProduct);
+            },
           );
         },
       ),
@@ -91,7 +57,11 @@ class ProductDetails extends StatelessWidget {
         ],
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Text('Product Details'),
+        title: CustomText(
+          text: 'Product Details',
+          colorText: Colors.black,
+        ),
+        centerTitle: true,
       ),
       body: Consumer<ApiProvider>(
         builder: (context, provider, index) {
@@ -134,12 +104,12 @@ class ProductDetails extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     Expanded(
-                                      child: Text(
-                                        '${provider.selectedProduct.title}',
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.deepOrange),
+                                      child: CustomText(
+                                        text:
+                                            '${provider.selectedProduct.title}',
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        colorText: Colors.deepOrange,
                                       ),
                                     ),
                                   ],
@@ -148,13 +118,11 @@ class ProductDetails extends StatelessWidget {
                               SizedBox(
                                 height: 20,
                               ),
-                              Text(
-                                '${provider.selectedProduct.description}',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black87,
-                                ),
+                              CustomText(
+                                text: '${provider.selectedProduct.description}',
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                colorText: Colors.black87,
                               ),
                               SizedBox(
                                 height: 25,
@@ -164,13 +132,12 @@ class ProductDetails extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                    child: Text(
-                                      '\$ ${provider.selectedProduct.price.toString()} ',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.redAccent,
-                                          fontWeight: FontWeight.w800),
-                                    ),
+                                    child: CustomText(
+                                        text:
+                                            '\$ ${provider.selectedProduct.price.toString()} ',
+                                        fontSize: 20,
+                                        colorText: Colors.redAccent,
+                                        fontWeight: FontWeight.w800),
                                   ),
                                   Container(
                                     child: Row(
@@ -182,18 +149,18 @@ class ProductDetails extends StatelessWidget {
                                         SizedBox(
                                           width: 10,
                                         ),
-                                        Text(
-                                          '${provider.selectedProduct.rating.rate}',
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                        CustomText(
+                                          text:
+                                              '${provider.selectedProduct.rating.rate}',
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
                                         ),
                                         SizedBox(
                                           width: 10,
                                         ),
-                                        Text(
-                                            '(${provider.selectedProduct.rating.count} Reviews)'),
+                                        CustomText(
+                                            text:
+                                                '(${provider.selectedProduct.rating.count} Reviews)'),
                                         SizedBox(
                                           width: 10,
                                         ),

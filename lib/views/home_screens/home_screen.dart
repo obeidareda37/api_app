@@ -4,6 +4,7 @@ import 'package:api_app/service/route_helpers.dart';
 import 'package:api_app/views/details/product_details.dart';
 import 'package:api_app/views/home_screens/cart_screen.dart';
 import 'package:api_app/views/home_screens/favorite_screen.dart';
+import 'package:api_app/widget/custom_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +80,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       Icons.favorite,
                       color: Colors.black45,
                     ),
-                    title: Text('Favorite Page'),
+                    title: CustomText(
+                      text: 'Favorite Page',
+                    ),
                   ),
                   ListTile(
                     onTap: () {
@@ -90,7 +93,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       Icons.shopping_cart,
                       color: Colors.black45,
                     ),
-                    title: Text('Cart Page'),
+                    title: CustomText(
+                      text: 'Cart Page',
+                    ),
                   ),
                 ],
               ),
@@ -119,9 +124,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Container(
                   margin: EdgeInsetsDirectional.only(start: 15),
-                  child: Text(
-                    'Categories!',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  child: CustomText(
+                    text: 'Categories',
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 SizedBox(
@@ -153,15 +159,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     : Colors.grey[100],
                                             borderRadius:
                                                 BorderRadius.circular(10)),
-                                        child: Text(
-                                            e[0].toUpperCase() + e.substring(1),
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color:
-                                                    provider.selectedCategory ==
-                                                            e
-                                                        ? Colors.white
-                                                        : Colors.black)),
+                                        child: CustomText(
+                                          text: e[0].toUpperCase() +
+                                              e.substring(1),
+                                          fontSize: 20,
+                                          colorText:
+                                              provider.selectedCategory == e
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                        ),
                                       ),
                                     ))
                                 .toList(),
@@ -174,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: CircularProgressIndicator(),
                         )
                       : Container(
-                          margin: EdgeInsets.symmetric(
+                          margin: const EdgeInsets.symmetric(
                               vertical: 10, horizontal: 10),
                           child: GridView.builder(
                               gridDelegate:
@@ -213,33 +219,35 @@ class _HomeScreenState extends State<HomeScreen> {
                                             alignment:
                                                 AlignmentDirectional.topEnd,
                                             child: Container(
-                                              alignment: Alignment.center,
-                                              padding: EdgeInsets.all(5),
-                                              width: 70,
-                                              height: 30,
-                                              decoration: BoxDecoration(
-                                                color: Colors.deepOrange,
-                                                borderRadius:
-                                                    BorderRadiusDirectional
-                                                        .only(
-                                                  bottomStart:
-                                                      Radius.circular(15),
+                                                alignment: Alignment.center,
+                                                padding:
+                                                    const EdgeInsets.all(5),
+                                                width: 70,
+                                                height: 30,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.deepOrange,
+                                                  borderRadius:
+                                                      BorderRadiusDirectional
+                                                          .only(
+                                                    bottomStart:
+                                                        Radius.circular(15),
+                                                  ),
                                                 ),
-                                              ),
-                                              child: Text(
-                                                provider.categoryProducts[index]
-                                                        .price
-                                                        .toString() +
-                                                    '\$',
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                            ),
+                                                child: CustomText(
+                                                  text: provider
+                                                          .categoryProducts[
+                                                              index]
+                                                          .price
+                                                          .toString() +
+                                                      '\$',
+                                                  colorText: Colors.white,
+                                                )),
                                           ),
                                           Container(
                                             width: 100,
                                             height: 100,
-                                            padding: EdgeInsets.only(top: 2),
+                                            padding:
+                                                const EdgeInsets.only(top: 2),
                                             child: CachedNetworkImage(
                                               imageUrl: provider
                                                   .categoryProducts[index]
@@ -255,21 +263,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
-                                                    provider
+                                                  CustomText(
+                                                    text: provider
                                                         .categoryProducts[index]
                                                         .title,
+                                                    maxLines: 2,
                                                     overflow:
                                                         TextOverflow.ellipsis,
-                                                    maxLines: 2,
                                                   ),
                                                   Row(
                                                     children: [
-                                                      Text(
-                                                        ' ${provider.categoryProducts[index].rating.rate}',
-                                                        style: TextStyle(
-                                                            color: Colors
-                                                                .deepOrange),
+                                                      CustomText(
+                                                        text:
+                                                            ' ${provider.categoryProducts[index].rating.rate}',
+                                                        colorText:
+                                                            Colors.deepOrange,
                                                       ),
                                                       Spacer(),
                                                       IconButton(
