@@ -2,7 +2,6 @@ import 'package:api_app/model/single_product_model.dart';
 import 'package:api_app/provider/api_provider.dart';
 import 'package:api_app/service/route_helpers.dart';
 import 'package:api_app/widget/bottoms_navigation/cart_bottom_navigation.dart';
-import 'package:api_app/widget/custom_button/custom_button_widget.dart';
 import 'package:api_app/widget/custom_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
